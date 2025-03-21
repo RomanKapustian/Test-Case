@@ -1,0 +1,145 @@
+<section class='mx-auto px-5 mt-8 md:mt-20 md:max-w-6xl'>
+  {% assign heading = 'customer.account.title' | t %}
+  {% render 'account-header', heading: heading, log_out: true %}
+
+  <div class='mt-10 border-t border-black pt-10'>
+    <aside class='grid  grid-cols-1 gap-x-auto md:grid-cols-3 md:gap-x-24'>
+      <div class='mb-16 md:mb-0'>
+        <div class='mb-6 text-h5-m md:text-h5-d text-left'>
+          {{ 'customer.account.info' | t }}
+        </div>
+        <div class='mb-2'>
+          <p>
+            {{ customer.name }}
+            <br>
+            {{ customer.email -}}
+            <br>
+            {{ customer.phone }}
+          </p>
+        </div>
+      </div>
+      <div>
+        <div class='mb-6 text-h5-m md:text-h5-d text-left'>
+          {{ 'customer.account.addresses' | t }}
+        </div>
+        <div class='mb-2'>{{ customer.default_address | format_address }}</div>
+        <a class='underline' href='{{ routes.account_addresses_url }}'>
+          {{ 'customer.account.view_addresses' | t }} (
+          {{- customer.addresses_count -}}
+          )
+        </a>
+      </div>
+    </aside>
+    <div class='mb-16 mt-20'>
+      <div class='md:flex md:items-center md:justify-between md:space-x-4'>
+        <div class='mb-6 text-h5-m md:text-h5-d text-left'>
+          {{ 'customer.orders.title' | t }}
+        </div>
+      </div>
+      {% paginate customer.orders by 20 %}
+        {%- if customer.orders.size > 0 -%}
+          <div class='mt-4 border-t border-black block md:hidden'>
+            {%- for order in customer.orders -%}
+              {% render 'mobile-table', order: order %}
+            {% endfor %}
+          </div>
+          <div class='mt-4 hidden md:block'>
+            <div class='flex flex-col'>
+              <div class='overflow-x-auto'>
+                <div class='inline-block min-w-full py-px align-middle'>
+                  <div class='overflow-hidden border-b border-black'>
+                    <table class='min-w-full divide-y'>
+                      <thead>
+                        <tr>
+                          <th
+                            scope='col'
+                            class='py-3.5 pl-0 pr-3 text-left uppercase font-normal text-sm'
+                          >
+                            {{- 'customer.orders.order_number' | t -}}
+                          </th>
+                          <th
+                            scope='col'
+                            class='px-3 py-3.5 text-left uppercase font-normal text-sm'
+                          >
+                            {{- 'customer.orders.date' | t -}}
+                          </th>
+                          <th
+                            scope='col'
+                            class='px-3 py-3.5 text-left uppercase font-normal text-sm'
+                          >
+                            {{- 'customer.orders.payment_status' | t -}}
+                          </th>
+                          <th
+                            scope='col'
+                            class='px-3 py-3.5 text-left uppercase font-normal text-sm'
+                          >
+                            {{- 'customer.orders.fulfillment_status' | t -}}
+                          </th>
+                          <th
+                            scope='col'
+                            class='relative py-3.5 pl-3 text-right uppercase font-normal text-sm'
+                          >
+                            {{- 'customer.orders.total' | t -}}
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody class='bg-white divide-y border-black'>
+                        {%- for order in customer.orders -%}
+                          <tr class='border-black'>
+                            <td class='py-8 pr-3 whitespace-nowrap'>
+                              <a
+                                class='underline'
+                                href='{{ order.customer_url }}'
+                                aria-label='{{ 'customer.orders.order_number_link' | t: number: order.name }}'
+                              >
+                                {{- order.name -}}
+                              </a>
+                            </td>
+                            <td class='px-3 py-8 whitespace-nowrap'>
+                              {{-
+                                order.created_at
+                                | time_tag: format: 'date'
+                              -}}
+                            </td>
+                            <td class='px-3 py-8 whitespace-nowrap'>
+                              {{- order.financial_status_label -}}
+                            </td>
+                            <td class='px-3 py-8 whitespace-nowrap'>
+                              {{- order.fulfillment_status_label -}}
+                            </td>
+                            <td class='relative py-8 pl-3 text-right whitespace-nowrap'>
+                              {{- order.total_price | money_with_currency -}}
+                            </td>
+                          </tr>
+                        {%- endfor -%}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {%- render 'pagination', paginate: paginate -%}
+        {%- else -%}
+          <div class='border-t border-b border-black py-20 text-center'>
+            <div class='mb-4 text-h5-m md:text-h5-d'>
+              {{ 'customer.account.no_found' | t }}
+            </div>
+            <p class='mb-4'>{{ 'customer.account.none' | t }}</p>
+            <a href='{{ routes.root_url }}' class='button'>
+              {{ 'customer.account.back_shop' | t }}
+            </a>
+          </div>
+        {%- endif -%}
+      {% endpaginate %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Account",
+  "settings": []
+}
+{% endschema %}

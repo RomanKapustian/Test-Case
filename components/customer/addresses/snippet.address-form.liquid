@@ -1,0 +1,250 @@
+{%- form 'customer_address', address, class: 'flex flex-col gap-y-4' -%}
+  {% liquid
+    assign id_first_name = 'AddressFirstNameNew'
+    assign id_last_name = 'AddressLastNameNew'
+    assign id_company = 'AddressCompanyNameNew'
+    assign id_address1 = 'AddressAddress1NameNew'
+    assign id_address2 = 'AddressAddress2NameNew'
+    assign id_city = 'AddressCityNameNew'
+    assign id_country = 'AddressCountryNameNew'
+    assign id_province = 'AddressProvinceNameNew'
+    assign id_zip = 'AddressZipNameNew'
+    assign id_phone = 'AddressPhoneNameNew'
+    assign id_default_checkbox = 'address_default_address_new'
+    assign id_cancel_button = 'AddAddressCancel'
+    assign text_submit_button = 'customer.addresses.add' | t
+
+    unless form.id == 'new'
+      assign id_first_name = "AddressFirstName_{{ form.id }}"
+      assign id_last_name = "AddressLastName_{{ form.id }}"
+      assign id_company = "AddressCompanyName_{{ form.id }}"
+      assign id_address1 = "AddressAddress1Name_{{ form.id }}"
+      assign id_address2 = "AddressAddress2Name_{{ form.id }}"
+      assign id_city = "AddressCityName_{{ form.id }}"
+      assign id_country = "AddressCountryName_{{ form.id }}"
+      assign id_province = "AddressProvinceName_{{ form.id }}"
+      assign id_zip = "AddressZipName_{{ form.id }}"
+      assign id_phone = "AddressPhoneName_{{ form.id }}"
+      assign id_default_checkbox = "address_default_address_{{ form.id }}"
+      assign id_cancel_button = "EditAddressCancel_{{ address.id }}"
+      assign text_submit_button = 'customer.addresses.update' | t
+    endunless
+  %}
+
+  <div
+    class='flex flex-row flex-wrap justify-between gap-y-4'
+    data-address-fields
+  >
+    {% assign input_label = 'customer.addresses.first_name' | t %}
+    <div class='input-wrapper'>
+      <label
+        for='{{ id_first_name }}'
+        class='input-label'
+      >
+        {{ input_label }}
+      </label>
+      <input
+        type='text'
+        name='address[first_name]'
+        id='{{ id_first_name }}'
+        class='input'
+        value='{{ form.first_name }}'
+        autocomplete='given-name'
+      >
+    </div>
+
+    {% assign input_label = 'customer.addresses.last_name' | t %}
+    <div class='input-wrapper'>
+      <label
+        for='{{ id_last_name }}'
+        class='input-label'
+      >
+        {{ input_label }}
+      </label>
+      <input
+        type='text'
+        name='address[last_name]'
+        id='{{ id_last_name }}'
+        class='input'
+        value='{{ form.last_name }}'
+        autocomplete='family-name'
+      >
+    </div>
+
+    {% assign input_label = 'customer.addresses.company' | t %}
+    <div class='input-wrapper'>
+      <label
+        for='{{ id_company }}'
+        class='input-label'
+      >
+        {{ input_label }}
+      </label>
+      <input
+        type='text'
+        name='address[company]'
+        id='{{ id_company }}'
+        class='input'
+        value='{{ form.company }}'
+        autocomplete='organization'
+      >
+    </div>
+
+    {% assign input_label = 'customer.addresses.address1' | t %}
+    <div class='input-wrapper'>
+      <label
+        for='{{ id_address1 }}'
+        class='input-label'
+      >
+        {{ input_label }}
+      </label>
+      <input
+        type='text'
+        name='address[address1]'
+        id='{{ id_address1 }}'
+        class='input'
+        value='{{ form.address1 }}'
+        autocomplete='address-line1'
+      >
+    </div>
+
+    {% assign input_label = 'customer.addresses.address2' | t %}
+    <div class='input-wrapper'>
+      <label
+        for='{{ id_address2 }}'
+        class='input-label'
+      >
+        {{ input_label }}
+      </label>
+      <input
+        type='text'
+        name='address[address2]'
+        id='{{ id_address2 }}'
+        class='input'
+        value='{{ form.address2 }}'
+        autocomplete='address-line2'
+      >
+    </div>
+
+    {% assign input_label = 'customer.addresses.city' | t %}
+    <div class='input-wrapper'>
+      <label
+        for='{{ id_city }}'
+        class='input-label'
+      >
+        {{ input_label }}
+      </label>
+      <input
+        type='text'
+        name='address[city]'
+        id='{{ id_city }}'
+        class='input'
+        value='{{ form.city }}'
+        autocomplete='address-level2'
+      >
+    </div>
+
+    <div class='select-wrapper'>
+      <label
+        for='{{ id_country }}'
+        class='select-label'
+      >
+        {{- 'customer.addresses.country' | t -}}
+      </label>
+      <select
+        data-address-country
+        id='{{ id_country }}'
+        class='select'
+        name='address[country]'
+        autocomplete='country'
+        data-default='{{ form.country }}'
+      ></select>
+    </div>
+
+    <div class='select-wrapper'>
+      <label
+        for='{{ id_province }}'
+        class='select-label'
+      >
+        {{- 'customer.addresses.province' | t -}}
+      </label>
+      <select
+        data-address-province
+        id='{{ id_province }}'
+        class='select'
+        name='address[province]'
+        autocomplete='province'
+        data-default='{{ form.province }}'
+      ></select>
+    </div>
+
+    {% assign input_label = 'customer.addresses.zip' | t %}
+    <div class='input-wrapper'>
+      <label
+        for='{{ id_zip }}'
+        class='input-label'
+      >
+        {{ input_label }}
+      </label>
+      <input
+        type='text'
+        name='address[zip]'
+        id='{{ id_zip }}'
+        class='input'
+        value='{{ form.zip }}'
+        autocomplete='postal-code'
+        autocapitalize='characters'
+      >
+    </div>
+
+    {% assign input_label = 'customer.addresses.phone' | t %}
+    <div class='input-wrapper'>
+      <label
+        for='{{ id_phone }}'
+        class='input-label'
+      >
+        {{ input_label }}
+      </label>
+      <input
+        type='tel'
+        name='address[phone]'
+        id='{{ id_phone }}'
+        class='input'
+        value='{{ form.phone }}'
+        autocomplete='tel'
+      >
+    </div>
+  </div>
+
+  <div class='relative flex items-start mb-1'>
+    <div class='flex items-center h-5'>
+      <input
+        id='{{ id_default_checkbox }}'
+        name='address[default]'
+        type='checkbox'
+        class='w-4 h-4 border-gray-300 rounded focus:ring-indigo-500'
+      >
+    </div>
+    <div class='ml-2 text-sm'>
+      <label for='{{ id_default_checkbox }}'>
+        {{- 'customer.addresses.set_default' | t -}}
+      </label>
+    </div>
+  </div>
+
+  <div class='grid gap-y-2 max-w-md'>
+    <button class='justify-center button button--primary bg-black'>
+      {{- text_submit_button -}}
+    </button>
+
+    <button
+      class='justify-center button'
+      type='reset'
+      id='{{ id_cancel_button }}'
+      {% if address %}
+        data-address-id='{{ address.id }}'
+      {% endif %}
+    >
+      {{- 'customer.addresses.cancel' | t -}}
+    </button>
+  </div>
+{%- endform -%}

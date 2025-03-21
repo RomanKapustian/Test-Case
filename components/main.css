@@ -1,0 +1,118 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  [data-aria-hidden='true'] {
+    @apply hidden;
+  }
+
+  a {
+    @apply underline;
+  }
+}
+
+@layer components {
+  .container {
+    /* Container padding doesn't seem to be working through tailwind config */
+    @apply px-1;
+  }
+
+  h1,
+  .h1 {
+    @apply text-4xl font-black font-sspro;
+  }
+
+  h2,
+  .h2 {
+    @apply text-[28px] laptop:text-heading2 font-bold laptop:font-black font-sspro;
+  }
+
+  h3,
+  .h3 {
+    @apply text-2xl font-black font-sspro;
+  }
+
+  .svg-stars svg {
+    @apply w-[10px] laptop:w-auto;
+  }
+
+  .grid-scroll {
+    @apply grid -ml-30 gap-x-5 grid-cols-max grid-flow-col overflow-x-scroll snap-proximity snap-x auto-cols-max grid-rows-auto justify-start custom-scrollbar before:content-[''] before:block before:w-2.5 before:h-2.5 after:content-[''] after:block after:w-2.5 after:h-2.5;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    @apply w-[300px] h-1 transition-all;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track-piece {
+    @apply w-36;
+  }
+
+  .custom-scrollbar:hover::-webkit-scrollbar {
+    @apply h-[6px] transition-all;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    @apply bg-gray w-[300px];
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-default;
+  }
+
+  .mobile-hide-product {
+    @apply !hidden laptop:!flex;
+  }
+
+  .mobile-hide-button {
+    @apply !hidden laptop:!flex;
+  }
+}
+
+/* For IE, Edge and Firefox */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+html {
+  height: 100%;
+  box-sizing: border-box;
+  font-family: 'Bebas';
+  font-size: 62.5%;
+}
+
+html.no-js .no-js-hidden {
+  display: none !important;
+}
+
+html,
+body {
+  font-size: 1rem;
+  font-variant-numeric: lining-nums;
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'Bebas';
+  font-style: normal;
+  font-weight: 400;
+  src: url('https://cdn.shopify.com/s/files/1/0903/9616/4482/files/BebasNeue-Regular.woff2?v=1742569720')
+    format('woff2');
+}
+
+@font-face {
+  font-display: swap;
+  font-family: 'SSPro';
+  font-style: normal;
+  font-weight: 700;
+  src: url('https://cdn.shopify.com/s/files/1/0903/9616/4482/files/SourceSerif4-Bold.otf.woff2?v=1742570454')
+    format('woff2');
+}

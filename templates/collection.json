@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "example": {
+      "type": "example",
+      "settings": {}
+    },
+    "a1f7b218-6dec-481c-84ab-807a6a2698ce": {
+      "type": "product-grid",
+      "settings": {}
+    }
+  },
+  "order": ["example", "a1f7b218-6dec-481c-84ab-807a6a2698ce"]
+}

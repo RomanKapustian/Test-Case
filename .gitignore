@@ -1,0 +1,10 @@
+# System
+.DS_Store
+
+# Theme
+/node_modules/
+
+# Config
+.env
+.npmrc
+package-lock.json

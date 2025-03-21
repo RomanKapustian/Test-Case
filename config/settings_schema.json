@@ -1,0 +1,39 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Base Theme",
+    "theme_version": "1.1.0-beta",
+    "theme_author": "Roman",
+    "theme_documentation_url": "http://google.com/",
+    "theme_support_url": "http://google.com/"
+  },
+  {
+    "name": "General",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon"
+      }
+    ]
+  },
+  {
+    "name": "Technical",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Storefront API"
+      },
+      {
+        "type": "text",
+        "id": "technical_storefront_token",
+        "label": "Token"
+      },
+      {
+        "type": "text",
+        "id": "technical_storefront_api_version",
+        "label": "Version"
+      }
+    ]
+  }
+]

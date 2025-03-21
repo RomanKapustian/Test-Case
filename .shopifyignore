@@ -1,0 +1,31 @@
+# Theme
+
+/.husky/
+/.vscode/
+/.github/
+/components/
+/fonts/
+/node_modules/
+README.md
+
+# Config
+
+.env
+.eslintignore
+.eslintrc.js
+.gitignore
+.npmrc
+.prettierignore
+.prettierrc
+.stylelintrc.json
+babel.config.json
+lighthouserc.json
+package.json
+package-lock.json
+postcss.config.js
+README.md
+tailwind.config.js
+translation.yaml
+webpack.config.components.js
+webpack.config.js
+yarn.lock

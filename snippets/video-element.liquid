@@ -1,0 +1,17 @@
+{% if video.media_type == 'video' %}
+  <video
+    class="w-full"
+    {% if autoplay %}autoplay="true"{% endif %}
+    muted="true"
+    loop="true"
+  >
+    {% for source in video.sources %}
+      <source
+        src="{{ source.url }}"
+        type="{{ source.mime_type }}"
+        height="{{ source.height }}"
+        width="{{ source.width }}"
+      />
+    {% endfor %}
+  </video>
+{% endif %}

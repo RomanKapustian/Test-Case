@@ -1,0 +1,76 @@
+<div class='flex my-6'>
+  <div class='basis-2/4 uppercase text-sm'>
+    <div class='mb-4'>{{ 'customer.order.subtotal' | t }}</div>
+    {%- if order.cart_level_discount_applications != blank -%}
+      {%- for discount_application in order.cart_level_discount_applications -%}
+        <div class='mb-4'>
+          {{ 'customer.order.discount' | t }} (
+          {{- discount_application.title -}}
+          )
+        </div>
+      {%- endfor -%}
+    {%- endif -%}
+    {%- if line_item.fulfillment -%}
+      <div class='mb-4'>
+        {%- assign created_at = line_item.fulfillment.created_at
+          | time_tag: format: 'date'
+        -%}
+        <span>
+          {{- 'customer.order.fulfilled_at_html' | t: date: created_at -}}
+        </span>
+      </div>
+    {%- endif -%}
+    {%- if order.tax_lines != blank %}
+      {%- for tax_line in order.tax_lines -%}
+        <div class='mb-4'>
+          {{ 'customer.order.tax' | t }} (
+          {{- tax_line.title }}
+          {{ tax_line.rate | times: 100 }}%)
+        </div>
+      {%- endfor -%}
+    {%- endif -%}
+    <div class='font-bold'>{{ 'customer.order.total' | t }}</div>
+  </div>
+  <div class='basis-2/4'>
+    <div class='text-right text-sm mb-4'>
+      {{ order.line_items_subtotal_price | money }}
+    </div>
+    {%- if order.cart_level_discount_applications != blank -%}
+      {%- for discount_application in order.cart_level_discount_applications -%}
+        <div class='text-right text-sm mb-4'>
+          {{ discount_application.total_allocated_amount | money }}
+        </div>
+      {%- endfor -%}
+    {%- endif -%}
+
+    {%- if line_item.fulfillment -%}
+      <div class='mb-4'>
+        {%- if line_item.fulfillment.tracking_url -%}
+          <a
+            class='underline'
+            href='{{ line_item.fulfillment.tracking_url }}'
+          >
+            {{ 'customer.order.track_shipment' | t }}
+          </a>
+        {%- endif -%}
+        <span>
+          {{ line_item.fulfillment.tracking_company }}
+          {%- if line_item.fulfillment.tracking_number -%}
+            #{{ line_item.fulfillment.tracking_number }}
+          {%- endif -%}
+        </span>
+      </div>
+    {%- endif -%}
+
+    {%- if order.tax_lines != blank %}
+      {%- for tax_line in order.tax_lines -%}
+        <div class='text-right text-sm mb-4'>
+          {{ tax_line.price | money }}
+        </div>
+      {%- endfor -%}
+    {%- endif -%}
+    <div class='text-right text-sm font-bold'>
+      {{ order.total_price | money_with_currency }}
+    </div>
+  </div>
+</div>

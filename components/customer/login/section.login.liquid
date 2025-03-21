@@ -1,0 +1,200 @@
+<section class='mb-20'>
+  {% comment %} Password recovery form {% endcomment %}
+  <div
+    id='recover'
+    class='max-w-sm snap-start scroll-mt-28 pt-20 outline-none flex-col items-center hidden mb-10 gap-x-5 peer target:flex mx-5 md:max-w-md md:mx-auto'
+    tabindex='-1'
+  >
+    <div class='text-h3-d mb-4 text-center'>
+      {{ 'customer.recover_password.title' | t }}
+    </div>
+    <p class='text-center text-s2-d'>
+      {{ 'customer.recover_password.subtitle' | t }}
+    </p>
+  </div>
+
+  <div class='hidden max-w-sm my-0 mx-5 peer-target:flex md:max-w-md md:mx-auto'>
+    {%- form 'recover_customer_password',
+      class: 'flex flex-col items-center gap-y-4 w-full'
+    -%}
+      {% assign recover_success = form.posted_successfully? %}
+      {% assign input_label = 'customer.login_page.email' | t %}
+      {% assign button_text = 'customer.login_page.submit' | t %}
+      {%- if form.errors -%}
+        <small class='flex gap-x-1 text-error' tabindex='-1'>
+          <span class='hidden'>{{ 'accessibility.error' | t }} </span>
+          <span class='inline-flex items-center m-0'>
+            {% render 'icon-error' %}
+          </span>
+          <div>
+            {{ form.errors.messages.form }}
+          </div>
+        </small>
+      {%- endif -%}
+      <div
+        class='w-full input-wrapper'
+        {%- if form.errors -%}
+          style='border-color: #AB1026'
+        {% endif %}
+      >
+        <label
+          for='RecoverEmail'
+          class='input-label'
+        >
+          {{ input_label }}
+        </label>
+        <input
+          type='email'
+          name='email'
+          id='RecoverEmail'
+          class='input'
+          autocorrect='off'
+          autocapitalize='off'
+          autocomplete='email'
+          {%- if form.errors -%}
+            aria-invalid='true'
+            aria-describedby='RecoverEmail-email-error'
+            autofocus
+          {%- endif -%}
+        >
+      </div>
+
+      <button class='w-full button button--primary justify-center bg-black'>
+        {{- 'customer.login_page.res_submit' | t -}}
+      </button>
+
+      <a href='#login' class='w-full text-center underline'>
+        {{- 'customer.login_page.cancel' | t -}}
+      </a>
+    {%- endform -%}
+  </div>
+  {% comment %} Customer login form {% endcomment %}
+  <div
+    id='login'
+    class='snap-start scroll-mt-28 pt-20 text-h3-d flex justify-center mb-10 peer-target:hidden'
+    tabindex='-1'
+  >
+    {{ 'customer.login_page.title' | t }}
+  </div>
+
+  <div class='max-w-sm mx-5 my-0 peer-target:hidden md:max-w-md md:mx-auto'>
+    {%- if recover_success == true -%}
+      <h2 class='font-bold' tabindex='-1' autofocus>
+        {% render 'icon-success' %}
+        {{ 'customer.recover_password.success' | t }}
+      </h2>
+    {%- endif -%}
+
+    {%- form 'customer_login',
+      class: 'flex flex-col items-center gap-y-4',
+      novalidate: 'novalidate'
+    -%}
+      {%- if form.errors -%}
+        <small
+          tabindex='-1'
+          class='text-error text-center focus:outline-none focus-visible:outline-none'
+        >
+          <div class='flex gap-x-1'>
+            <span class='hidden'>{{ 'accessibility.error' | t }} </span>
+
+            <span class='inline-flex items-center m-0'>
+              {% render 'icon-error' %}
+            </span>
+            <p>{{ 'customer.error_heading' | t }}</p>
+          </div>
+          <div>
+            {{ form.errors | default_errors }}
+          </div>
+        </small>
+      {%- endif -%}
+      {% assign input_label = 'customer.login_page.email' | t %}
+      <div
+        class='w-full input-wrapper'
+        {%- if form.errors -%}
+          style='border-color: #AB1026'
+        {% endif %}
+      >
+        <label
+          for='CustomerEmail'
+          class='input-label'
+        >
+          {{ input_label }}
+        </label>
+        <input
+          type='email'
+          name='customer[email]'
+          id='CustomerEmail'
+          class='input'
+          autocorrect='off'
+          autocapitalize='off'
+          autocomplete='email'
+          {%- if form.errors contains 'form' -%}
+            aria-invalid='true'
+          {%- endif -%}
+        >
+      </div>
+
+      {%- if form.password_needed -%}
+        {% assign input_label = 'customer.login_page.password' | t %}
+        <div
+          class='w-full input-wrapper'
+          {%- if form.errors -%}
+            style='border-color: #AB1026'
+          {% endif %}
+        >
+          <label
+            for='CustomerPassword'
+            class='input-label'
+          >
+            {{ input_label }}
+          </label>
+          <input
+            type='password'
+            name='customer[password]'
+            id='CustomerPassword'
+            class='input'
+            autocomplete='current-password'
+            {% if form.errors contains 'form' %}
+              aria-invalid='true'
+            {%- endif -%}
+          >
+        </div>
+        <div class='w-full text-xs text-left'>
+          <a href='#recover' class='inline-block underline font-bold'>
+            {{ 'customer.login_page.forgot_password' | t }}
+          </a>
+        </div>
+      {%- endif -%}
+
+      <button class='w-full button button--primary justify-center bg-black'>
+        {{- 'customer.login_page.sign_in' | t -}}
+      </button>
+      <a
+        class='w-full button justify-center'
+        href='{{ routes.account_register_url }}'
+      >
+        {{ 'customer.login_page.create_account' | t }}
+      </a>
+    {%- endform -%}
+  </div>
+
+  {%- if shop.checkout.guest_login -%}
+    <div class='max-w-sm my-0 mx-5 md:max-w-md md:mx-auto'>
+      <hr>
+      <div class='text-h3-d'>{{ 'customer.login_page.guest_title' | t }}</div>
+
+      {%- form 'guest_login', class: 'flex flex-col items-center gap-y-4' -%}
+        <button class='w-full mx-0 mt-8 mb-6 button button--primary'>
+          {{- 'customer.login_page.guest_continue' | t -}}
+        </button>
+      {%- endform -%}
+    </div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Login",
+  "settings": []
+}
+{% endschema %}

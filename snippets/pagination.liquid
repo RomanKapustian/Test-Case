@@ -1,0 +1,65 @@
+{%- if paginate.pages > 1 -%}
+  {%- if paginate.parts.size > 0 -%}
+    <nav
+      class="flex items-center justify-between px-4 sm:px-0"
+      data-pagination
+    >
+      <div class="flex flex-1 w-0">
+        {%- if paginate.previous -%}
+          <a
+            href="{{ paginate.previous.url }}"
+            class="inline-flex items-center pr-1"
+          >
+            {{- 'pagination.previous' | t -}}
+          </a>
+        {%- else -%}
+          <span class="inline-flex items-center pr-1">
+            {{- 'pagination.previous' | t -}}
+          </span>
+        {%- endif -%}
+      </div>
+
+      <div class="hidden md:flex">
+        {%- for part in paginate.parts -%}
+          {%- if part.is_link -%}
+            <a
+              href="{{- part.url -}}"
+              class="inline-flex items-center px-4"
+            >
+              {{- part.title -}}
+            </a>
+          {%- elsif part.title == paginate.current_page -%}
+            <span
+              class="inline-flex items-center px-4"
+              aria-current="{{ 'pagination.page' | t: number: part.title }}"
+            >
+              {{- part.title -}}
+            </span>
+          {%- else -%}
+            <span>{{ part.title }}</span>
+            <span
+              class="inline-flex items-center px-4"
+            >
+              {{- part.title -}}
+            </span>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      <div class="flex justify-end flex-1 w-0">
+      {%- if paginate.next -%}
+          <a
+            href="{{ paginate.next.url }}"
+            class="inline-flex items-center pl-1"
+          >
+            {{- 'pagination.next' | t -}}
+          </a>
+        {%- else -%}
+          <span class="inline-flex items-center pl-1">
+            {{- 'pagination.next' | t -}}
+          </span>
+        {%- endif -%}
+      </div>
+    </nav>
+  {%- endif -%}
+{%- endif -%}

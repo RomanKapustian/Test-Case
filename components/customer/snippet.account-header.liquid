@@ -1,0 +1,78 @@
+<div>
+  <div>
+    {%- liquid
+      assign has_breadcrumb_1 = false
+      assign has_breadcrumb_2 = false
+      if breadcrumb_1_text != blank and breadcrumb_1_url != blank
+        assign has_breadcrumb_1 = true
+      endif
+      if breadcrumb_2_text != blank and breadcrumb_2_url != blank
+        assign has_breadcrumb_2 = true
+      endif
+    -%}
+
+    {%- if has_breadcrumb_1 -%}
+      <nav class='flex' aria-label='Breadcrumb'>
+        <ol role='list' class='flex items-center space-x-4'>
+          {%- if has_breadcrumb_1 -%}
+            <li class='flex align-center items-center border-b border-black'>
+              {%- render 'icon', id: 'arrow-left-account' %}
+              <a
+                href='{{ breadcrumb_1_url }}'
+                class='text-sm font-medium '
+              >
+                <span class='z-0 mr-[2px]'> </span>
+                {{ breadcrumb_1_text -}}
+              </a>
+            </li>
+          {%- endif -%}
+          {%- if has_breadcrumb_2 -%}
+            <li>
+              <div class='flex items-center'>
+                /
+                <a
+                  href='{{ breadcrumb_2_url }}'
+                  class='ml-4 text-sm font-medium'
+                >
+                  {{- breadcrumb_2_text -}}
+                </a>
+              </div>
+            </li>
+          {%- endif -%}
+        </ol>
+      </nav>
+    {%- endif -%}
+  </div>
+
+  <div class='mt-8 md:flex md:items-center md:justify-between'>
+    {%- if heading != blank -%}
+      <div class='flex-1 min-w-0'>
+        <h1>
+          {{- heading -}}
+        </h1>
+
+        {% if subheading != blank %}
+          <div class='flex flex-col mt-1 sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6'>
+            {{ subheading }}
+          </div>
+        {% endif %}
+      </div>
+    {%- endif -%}
+
+    <div class='flex flex-shrink-0 mt-4 md:mt-0 md:ml-4'>
+      {%- if log_out == true -%}
+        <a
+          class='self-center whitespace-nowrap mr-2'
+          href='{{ routes.account_logout_url }}'
+        >
+          {{- 'customer.general.log_out' | t -}}
+        </a>
+      {%- endif -%}
+      {%- if primary_action != blank -%}
+        <span>
+          {{- primary_action -}}
+        </span>
+      {%- endif -%}
+    </div>
+  </div>
+</div>

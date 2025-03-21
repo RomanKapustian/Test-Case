@@ -1,0 +1,121 @@
+{% comment %}
+  Works with the Video class in utils/video.js
+  Currently only supports Vimeo and Shopify-hosted videos.
+
+  Settings that can be passed to the JS:
+    - autoplay {boolean}
+    - controls {boolean}
+    - video_desktop {string} optional
+    - video_mobile {string} optional
+    - play_selector {string} optional: for a custom play button
+    - mute_selector {string} optional: for a custom mute button
+
+  Note: if using custom play/mute buttons, they should be formatted as follows.
+  One of the spans within the button should be "hidden" by default, and the JS
+  will handle updates.
+    <button SELECTOR type="button">
+      <span>PLAY/UNMUTE</span>
+      <span class="hidden">PAUSE/MUTE</span>
+    </button>
+
+  Usage:
+    {%
+      render 'video',
+      autoplay: true,
+      controls: true,
+      video_desktop: section.settings.desktop_video,
+      video_mobile: section.settings.mobile_video,
+    %}
+
+  Schema:
+    {
+      "type": "video",
+      "id": "video_desktop",
+      "label": "Desktop video",
+      "info": "Shopify-hosted video"
+    }
+    OR
+    {
+      "type": "video_url",
+      "id": "desktop_video",
+      "label": "Desktop video",
+      "accept": ["vimeo"],
+      "info": "Vimeo-hosted video"
+    }
+{% endcomment %}
+
+{% liquid
+  if video_desktop.media_type == 'video'
+    assign host = 'shopify'
+    assign video_d = video_desktop
+  elsif video_desktop.type == 'vimeo'
+    assign host = 'vimeo'
+    assign video_d = video_desktop.id
+  endif
+
+  if video_mobile.media_type == 'video'
+    assign host = 'shopify'
+    assign video_m = video_mobile
+  elsif video_mobile.type == 'vimeo'
+    assign host = 'vimeo'
+    assign video_m = video_mobile.id
+  endif
+%}
+
+<div class="relative" data-component="video">
+  <script type="application/json" data-component-data>
+    {
+      "autoplay": {{ autoplay | json }},
+      "controls": {{ controls | json }},
+      "videoDesktop": {{ video_d | json }},
+      "videoMobile": {{ video_m | json }},
+      "host": {{ host | json }},
+      "play": {
+        "selector": {{ play_selector | json }},
+        "playText": {{ 'accessibility.play' | t | json }},
+        "pauseText": {{ 'accessibility.pause' | t | json }}
+      },
+      "mute": {
+        "selector": {{ mute_selector | json }},
+        "muteText": {{ 'accessibility.mute' | t | json }},
+        "unmuteText": {{ 'accessibility.unmute' | t | json }}
+      }
+    }
+  </script>
+
+  {% if video_desktop != blank %}
+    <div id="video-{{ video_desktop.id }}">
+      {% render 'video-element', video: video_desktop, autoplay: autoplay %}
+    </div>
+  {% endif %}
+  {% if video_mobile != blank %}
+    <div id="video-{{ video_mobile.id }}">
+      {% render 'video-element', video: video_mobile, autoplay: autoplay %}
+    </div>
+  {% endif %}
+
+  {% if controls %}
+    <div class="absolute bottom-0 right-0 z-10 flex">
+      {% if play_selector == blank %}
+        <button
+          data-video-play
+          type="button"
+          aria-label="{% if autoplay %}{{ 'accessibility.pause' | t }}{% else %}{{ 'accessibility.play' | t }}{% endif %}"
+        >
+          <span class="{% if autoplay %}hidden{% endif %}">{% render 'icon-play' %}</span>
+          <span class="{% unless autoplay %}hidden{% endunless %}">{% render 'icon-pause' %}</span>
+        </button>
+      {% endif %}
+      {% if mute_selector == blank %}
+        <button
+          data-video-mute
+          type="button"
+          aria-label="{{ 'accessibility.unmute' | t }}"
+        >
+          <span>{% render 'icon-sound-off' %}</span>
+          <span class="hidden">{% render 'icon-sound-on' %}</span>
+        </button>
+      {% endif %}
+    </div>
+  {% endif %}
+</div>

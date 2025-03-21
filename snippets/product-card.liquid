@@ -1,0 +1,87 @@
+{% comment %}
+  Renders a product card
+
+  Accepts:
+  - product: {Object} Product Liquid object
+  - show_secondary_image: {Boolean} Show the secondary image on hover. Default: true (optional)
+
+  Usage:
+  {% render 'product-card',
+    product: collection.products[0],
+    show_secondary_image: false,
+    index: forloop.index
+  %}
+{% endcomment %}
+<div class='flex flex-col gap-[10px] laptop:gap-15 w-[48%] laptop:w-pcard mb-[20px] laptop:mb-0 relative {% if index > 4 %}mobile-hide-product{% endif %}'>
+  <div class='absolute top-[5px] left-2 z-10'>
+    <p class='bg-white border border-black px-[5px] font-bebas text-[8px] laptop:text-[10px] text-default rounded-xl'>
+      Best Seller
+    </p>
+  </div>
+  <div class='absolute top-[5px] right-2 z-10'>
+    <p class='border border-black px-[5px] font-bebas text-[8px] laptop:text-[10px] text-white bg-[#5C7962] rounded-xl'>
+      save 15%
+    </p>
+  </div>
+  <a
+    href='{{ product.url }}'
+    class='block group relative rounded-2xl overflow-hidden z-2 {% if saleFinished %}{{ disabledClasses }}{% endif %}'
+  >
+    {% if product.featured_image %}
+      {% render 'image',
+        image_desktop: product.featured_image,
+        image_mobile: product.featured_image,
+        src_sm: 640,
+        src_md: 768,
+        src_lg: 1024,
+        src_xl: 1280,
+        src_2xl: 1536,
+        classes: 'aspect-[1/1] object-cover'
+      %}
+    {% else %}
+      <div class='aspect-[1/1]'>
+        {{ 'image' | placeholder_svg_tag }}
+      </div>
+    {% endif %}
+    {% if product.images[1] != null and show_secondary_image %}
+      {% render 'image',
+        image_desktop: product.images[1],
+        image_mobile: product.images[1],
+        src_sm: 640,
+        src_md: 768,
+        src_lg: 1024,
+        src_xl: 1280,
+        src_2xl: 1536,
+        classes: 'absolute top-0 left-0 w-full h-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 object-cover'
+      %}
+    {% endif %}
+  </a>
+  <div class='relative flex flex-col gap-2 laptop:gap-[10px] px-14'>
+    <div>
+      <a
+        href='{{ product.url }}'
+        class='text-[16px] inline-block leading-[120%] laptop:leading-[100%] text-default no-underline hover:underline'
+      >
+        {{ product.title | escape }}
+      </a>
+    </div>
+    <div class='flex gap-[1px] laptop:gap-2 items-center justify-start'>
+      <div class='flex gap-[1px] svg-stars'>
+        {% render 'icon-star-full' %}
+        {% render 'icon-star-full' %}
+        {% render 'icon-star-full' %}
+        {% render 'icon-star-full' %}
+        {% render 'icon-star-half' %}
+      </div>
+      <p class='font-poppins text-graylight text-xs'>1234 Reviews</p>
+    </div>
+    <div>
+      {% assign variant = product.first_available_variant
+        | default: product.variants[0]
+      %}
+      <p class='font-poppins font-medium text-base text-default'>
+        {{ variant.price | money }}
+      </p>
+    </div>
+  </div>
+</div>

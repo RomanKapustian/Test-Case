@@ -1,0 +1,22 @@
+<section data-section="header">
+  <script type="application/json" data-section-data>
+    {}
+  </script>
+
+  <div class="flex justify-between">
+    <a href="/">Logo</a>
+
+    <button data-header-cart-trigger type="button">
+      {{- 'cart.general.cart' | t }} <span data-cart-count></span>
+    </button>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+
+  ]
+}
+{% endschema %}

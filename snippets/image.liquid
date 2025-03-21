@@ -1,0 +1,127 @@
+{% comment %}
+  Responsive image component
+
+  Settings:
+    image_desktop: image for larger viewport widths
+    image_mobile: image for smaller viewport widths
+    src_sm-2xl: image widths at varying breakpoints
+    imitial_width: for src passed to default <img/> tag
+    mobile_width: the viewport width at which the images switch
+
+  Usage:
+    {% render 'image',
+      image_desktop: image_1,
+      image_mobile: image_2,
+      src_sm: 640,
+      src_md: 768,
+      src_lg: 1024,
+      src_xl: 1280,
+      src_2xl: 1536,
+      initial_width: 1024, // default: 640
+      mobile_width: 640, // default: 640
+      lazyload: true, // default: true
+    %}
+{% endcomment %}
+
+{%- liquid
+  unless mobile_width
+    assign mobile_width = 640
+  endunless
+  unless initial_width
+    assign initial_width = 640
+  endunless
+  unless lazyload == false
+    assign lazyload = true
+  endunless
+  assign sizes = 'sm::640|md::768|lg::1024|xl::1280|2xl::1536' | split: '|'
+  assign source_srcset = ''
+  assign source_sizes = ''
+
+  assign images = ''
+  if image_desktop != blank
+    assign images = images | append: '|' | append: image_desktop.id
+  endif
+  if image_mobile != blank
+    assign images = images | append: '|' | append: image_mobile.id
+  endif
+  assign images = images | remove_first: '|' | split: '|'
+
+  for i in images
+    assign i_id = i | times: 1
+    if i_id == image_desktop.id
+      assign image = image_desktop
+    endif
+    if i_id == image_mobile.id
+      assign image = image_mobile
+    endif
+
+    assign srcset_formatted = ''
+    assign sizes_temp = ''
+    assign sizes_formatted = ''
+    assign srcs = ''
+    if src_sm
+      assign srcs = srcs | append: '|sm::' | append: src_sm
+    endif
+    if src_md
+      assign srcs = srcs | append: '|md::' | append: src_md
+    endif
+    if src_lg
+      assign srcs = srcs | append: '|lg::' | append: src_lg
+    endif
+    if src_xl
+      assign srcs = srcs | append: '|xl::' | append: src_xl
+    endif
+    if src_2xl
+      assign srcs = srcs | append: '|2xl::' | append: src_2xl
+    endif
+    assign srcs = srcs | remove_first: '|' | split: '|'
+
+    for size in sizes
+      assign current_size_parts = size | split: '::'
+      assign current_size_key = current_size_parts | first
+      assign current_size_value = current_size_parts | last
+      for src in srcs
+        assign src_parts = src | split: '::'
+        assign src_key = src_parts | first
+        if current_size_key == src_key
+          assign width = src_parts | last | times: 1
+          assign size_width = current_size_value | times: 1
+          assign img = image | image_url: width: width
+          assign srcset_formatted = srcset_formatted | append: '|' | append: img | append: ' ' | append: width | append: 'w'
+          assign sizes_formatted = sizes_temp | append: '|' | append: width | append: 'px'
+          assign sizes_temp = sizes_temp | append: '|' | append: '(max-width: ' | append: size_width | append: 'px) ' | append: width | append: 'px'
+          break
+        endif
+      endfor
+    endfor
+    assign srcset_formatted = srcset_formatted | remove_first: '|' | split: '|' | join: ', '
+    assign sizes_formatted = sizes_formatted | remove_first: '|' | split: '|' | join: ', '
+
+    assign source_srcset = source_srcset | append: '::' | append: srcset_formatted
+    assign source_sizes = source_sizes | append: '::' | append: sizes_formatted
+  endfor
+  assign source_srcset = source_srcset | remove_first: '::' | split: '::'
+  assign source_sizes = source_sizes | remove_first: '::' | split: '::'
+-%}
+
+<picture>
+  {% for source in source_srcset %}
+    <source
+      srcset='{{ source }}'
+      sizes='{{ source_sizes[forloop.index0] }}'
+      {% if forloop.index == 1 %}
+        media='(min-width: {{ mobile_width }}px)'
+      {% endif %}
+    >
+  {% endfor %}
+  <img
+    class='w-full image {{ classes }}'
+    src='{{ image | image_url: width: initial_width }}'
+    alt='{{ image.alt | escape }}'
+    {% if lazyload %}
+      loading='lazy'
+    {% endif %}
+    width='{{ image.width }}'
+    height='{{ image.height }}'
+  >
+</picture>

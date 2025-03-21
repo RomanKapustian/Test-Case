@@ -1,0 +1,178 @@
+<section
+  class='mx-auto px-5 my-16 md:mt-20 md:max-w-6xl'
+  data-section='customer/addresses'
+>
+  {% assign account = 'customer.addresses.back_title' | t %}
+  {% assign heading = 'customer.addresses.title' | t %}
+  {% capture primary_action %}
+    <div>
+      <button
+        class="justify-center button button--primary justify-center bg-black w-56"
+        type="button"
+        id="AddAddressButton"
+        aria-expanded="false"
+        aria-controls="AddAddress"
+        data-primary-action="add">
+        {{- 'customer.addresses.add_new' | t -}}
+      </button>
+      <div class='hidden'><button
+        class="justify-center hidden w-full button button--primary"
+        type="reset"
+        data-primary-action="cancel">
+        {{- 'customer.addresses.cancel' | t -}}
+      </button>
+    </div>
+    </div>
+  {% endcapture %}
+  <div class='mb-12'>
+    {% render 'account-header',
+      heading: heading,
+      breadcrumb_1_text: account,
+      breadcrumb_1_url: routes.account_url,
+      primary_action: primary_action,
+      log_out: false
+    %}
+  </div>
+  {%- paginate customer.addresses by 5 -%}
+    <div data-customer-addresses>
+      <div id='AddAddress' class='flex flex-col items-center hidden'>
+        <div
+          id='AddressNewHeading'
+          class='w-full mb-4 text-left text-h5-m md:text-h5-d'
+        >
+          {{- 'customer.addresses.add_new' | t -}}
+        </div>
+
+        {%- render 'address-form', address: customer.new_address %}
+      </div>
+
+      <div id='AddressesList'>
+        {%- for address in customer.addresses -%}
+          {%- if address == customer.default_address -%}
+            <div class='py-10 border-t border-black {% if customer.addresses.size > 1 %}border-b{% endif %}'>
+              <div class='mb-6 text-h5-m md:text-h5-d text-left'>
+                {{ 'customer.addresses.primary_address' | t }}
+              </div>
+              <div class='w-1/4' data-address>
+                <div
+                  id='Address_{{ address.id }}'
+                  class='flex flex-col justify-between h-full'
+                >
+                  <div class='mb-8'>
+                    <div>{{ address | format_address }}</div>
+                    {%- if address == customer.default_address -%}
+                      <span>{{ 'customer.addresses.default' | t }}</span>
+                    {%- endif -%}
+                  </div>
+
+                  <div class='gap-x-2'>
+                    <div
+                      class='text-left underline cursor-pointer'
+                      type='button'
+                      id='EditFormButton_{{ address.id }}'
+                      aria-label='{{ 'customer.addresses.edit_address' | t }} {{ forloop.index }}'
+                      aria-controls='EditAddress_{{ address.id }}'
+                      aria-expanded='false'
+                      data-address-id='{{ address.id }}'
+                    >
+                      {{- 'customer.addresses.edit' | t -}}
+                    </div>
+                    <div
+                      class='text-left underline cursor-pointer'
+                      type='button'
+                      aria-label='{{ 'customer.addresses.delete' | t }} {{ forloop.index }}'
+                      data-target='{{ address.url }}'
+                      data-confirm-message='{{ 'customer.addresses.delete_confirm' | t }}'
+                    >
+                      {{- 'customer.addresses.delete' | t -}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+        {% if customer.addresses.size > 1 %}
+          <div class='pt-10'>
+            <div class='mb-6 text-h5-m md:text-h5-d text-left'>
+              {{ 'customer.addresses.additional_addresses' | t }}
+            </div>
+            <ul
+              class='grid mb-16 grid-cols-1 gap-x-20 md:gap-y-20 md:grid-cols-4'
+              role='list'
+            >
+              {%- for address in customer.addresses -%}
+                {%- if address != customer.default_address -%}
+                  <li data-address>
+                    <div
+                      id='Address_{{ address.id }}'
+                      class='flex flex-col justify-between h-full'
+                    >
+                      <div class='mb-8'>
+                        <div>{{ address | format_address }}</div>
+                      </div>
+
+                      <div class='gap-x-2'>
+                        <div
+                          class='text-left underline cursor-pointer'
+                          type='button'
+                          id='EditFormButton_{{ address.id }}'
+                          aria-label='{{ 'customer.addresses.edit_address' | t }} {{ forloop.index }}'
+                          aria-controls='EditAddress_{{ address.id }}'
+                          aria-expanded='false'
+                          data-address-id='{{ address.id }}'
+                        >
+                          {{- 'customer.addresses.edit' | t -}}
+                        </div>
+                        <div
+                          class='text-left underline cursor-pointer'
+                          type='button'
+                          aria-label='{{ 'customer.addresses.delete' | t }} {{ forloop.index }}'
+                          data-target='{{ address.url }}'
+                          data-confirm-message='{{ 'customer.addresses.delete_confirm' | t }}'
+                        >
+                          {{- 'customer.addresses.delete' | t -}}
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                {%- endif -%}
+              {%- endfor -%}
+            </ul>
+          </div>
+        {%- endif -%}
+        {%- render 'pagination', paginate: paginate -%}
+      </div>
+
+      <ul role='list'>
+        {%- for address in customer.addresses -%}
+          <li
+            id='EditAddress_{{ address.id }}'
+            class='hidden w-full'
+            data-address
+          >
+            <div class='mb-4 text-h5-m md:text-h5-d'>
+              {{ 'customer.addresses.edit_address' | t }}
+            </div>
+
+            {%- render 'address-form', address: address %}
+          </li>
+        {%- endfor -%}
+      </ul>
+    </div>
+  {%- endpaginate -%}
+  <div class='mt-6'>
+    {% render 'account-header',
+      breadcrumb_1_text: account,
+      breadcrumb_1_url: routes.account_url,
+      log_out: false
+    %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Addresses",
+  "settings": []
+}
+{% endschema %}

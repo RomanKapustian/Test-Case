@@ -1,0 +1,170 @@
+{
+  "404": {
+    "title": "Page not found",
+    "subtitle": "404",
+    "continue_shopping": "Continue shopping"
+  },
+  "accessibility": {
+    "error": "Error",
+    "mute": "Mute",
+    "pause": "Pause",
+    "play": "Play",
+    "success": "Success",
+    "unit_price_separator": "Unit price separator",
+    "unmute": "Unmute"
+  },
+  "pagination": {
+    "label": "Pagination",
+    "page": "Page {{ number }}",
+    "next": "Next page",
+    "previous": "Previous page"
+  },
+  "cart": {
+    "general": {
+      "add": "Add",
+      "cart": "Cart",
+      "checkout": "Checkout",
+      "close": "Close",
+      "remove": "Remove",
+      "subtract": "Subtract"
+    }
+  },
+  "customer": {
+    "general": {
+      "log_in": "Log in",
+      "log_out": "Log out"
+    },
+    "account": {
+      "title": "Account",
+      "details": "Account details",
+      "info": "Account Information",
+      "addresses": "Addresses",
+      "view_addresses": "View addresses",
+      "back_shop": "Back to shopping",
+      "none": "Looks like you haven't made any orders yet.",
+      "no_found": "No orders found"
+    },
+    "account_fallback": "Account",
+    "activate_account": {
+      "title": "Activate Account",
+      "subtitle": "Create a password to activate your account",
+      "password": "Password",
+      "password_confirm": "Confirm password",
+      "submit": "Activate account",
+      "cancel": "Decline Invitation"
+    },
+    "addresses": {
+      "title": "Addresses",
+      "back_title": "Back to Dashboard",
+      "default": "Default",
+      "add_new": "Add a New Address",
+      "edit_address": "Edit address",
+      "first_name": "First name",
+      "last_name": "Last name",
+      "company": "Company",
+      "address1": "Address 1",
+      "address2": "Address 2",
+      "city": "City",
+      "country": "Country/region",
+      "province": "Province",
+      "zip": "Postal/ZIP code",
+      "phone": "Phone",
+      "set_default": "Set as default address",
+      "add": "Add address",
+      "update": "Update",
+      "cancel": "Cancel",
+      "edit": "Edit Address",
+      "delete": "Delete Address",
+      "delete_confirm": "Are you sure you wish to delete this address?",
+      "primary_address": "Primary Address",
+      "additional_addresses": "Additional Addresses"
+    },
+    "error_heading": "Please adjust the following:",
+    "login_page": {
+      "cancel": "Back to login",
+      "create_account": "Create an account",
+      "email": "Email",
+      "forgot_password": "Forgot your password?",
+      "guest_continue": "Continue",
+      "guest_title": "Continue as a guest",
+      "password": "Password",
+      "title": "Login",
+      "sign_in": "Sign in",
+      "submit": "Submit",
+      "res_submit": "Reset your password"
+    },
+    "order": {
+      "title": "Order {{ name }}",
+      "date_html": "Placed on {{ date }}",
+      "cancelled_html": "Order Cancelled on {{ date }}",
+      "cancelled_reason": "Reason: {{ reason }}",
+      "billing_address": "Billing Address",
+      "payment_status": "Payment Status",
+      "shipping_address": "Shipping Address",
+      "fulfillment_status": "Fulfillment Status",
+      "discount": "Discount",
+      "shipping": "Shipping",
+      "tax": "Tax",
+      "product": "Product",
+      "sku": "SKU",
+      "price": "Price",
+      "quantity": "Quantity",
+      "total": "Total",
+      "fulfilled_at_html": "Fulfilled {{ date }}",
+      "track_shipment": "Track shipment",
+      "tracking_url": "Tracking link",
+      "tracking_company": "Carrier",
+      "tracking_number": "Tracking number",
+      "subtotal": "Subtotal",
+      "manage_subscription": "Manage subscription",
+      "back_title": "Back to Dashboard",
+      "status": "Status"
+    },
+    "orders": {
+      "title": "Order history",
+      "order_number": "Order",
+      "order_number_link": "Order number {{ number }}",
+      "date": "Date",
+      "payment_status": "Payment status",
+      "fulfillment_status": "Fulfillment status",
+      "total": "Total",
+      "none": "You haven't placed any orders yet."
+    },
+    "recover_password": {
+      "title": "Forgot your password?",
+      "subtitle": "Enter your email address and we will email you a link to reset your password.",
+      "success": "We've sent you an email with a link to update your password."
+    },
+    "register": {
+      "title": "Create an account",
+      "first_name": "First name",
+      "last_name": "Last name",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Create an account",
+      "to_login": "Back to login"
+    },
+    "reset_password": {
+      "title": "Reset account password",
+      "subtitle": "Enter a new password for {{ email }}",
+      "password": "Password",
+      "password_confirm": "Confirm password",
+      "submit": "Reset password"
+    }
+  },
+  "product": {
+    "form": {
+      "add_to_cart": "Add to bag",
+      "out_of_stock": "Out of stock",
+      "unavailable": "Unavailable"
+    },
+    "price": {
+      "regular_price": "Regular price",
+      "sale_price": "Sale price",
+      "unit_price": "Unit price"
+    },
+    "bundle": {
+      "value": "value"
+    }
+  }
+}

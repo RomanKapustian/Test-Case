@@ -1,0 +1,66 @@
+<div class='py-6 border-b border-black'>
+  <div class='flex'>
+    <div class='basis-2/4 uppercase text-sm mb-4'>
+      <div>{{- 'customer.orders.order_number' | t -}}</div>
+    </div>
+    <div class='basis-2/4 mb-4'>
+      <div class='text-right text-sm'>
+        <a
+          class='underline'
+          href='{{ order.customer_url }}'
+          aria-label='{{ 'customer.orders.order_number_link' | t: number: order.name }}'
+        >
+          {{- order.name -}}
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class='flex'>
+    <div class='basis-2/4 uppercase text-sm mb-4'>
+      <div>
+        {{- 'customer.orders.date' | t -}}
+      </div>
+    </div>
+    <div class='basis-2/4'>
+      <div class='text-right text-sm mb-4'>
+        {{- order.created_at | time_tag: format: 'date' -}}
+      </div>
+    </div>
+  </div>
+  <div class='flex'>
+    <div class='basis-2/4 uppercase text-sm mb-4'>
+      <div>
+        {{- 'customer.orders.payment_status' | t -}}
+      </div>
+    </div>
+    <div class='basis-2/4 mb-4'>
+      <div class='text-right text-sm'>
+        {{- order.financial_status_label -}}
+      </div>
+    </div>
+  </div>
+  <div class='flex'>
+    <div class='basis-2/4 uppercase text-sm mb-4'>
+      <div>
+        {{- 'customer.orders.fulfillment_status' | t -}}
+      </div>
+    </div>
+    <div class='basis-2/4 mb-4'>
+      <div class='text-right text-sm'>
+        {{- order.fulfillment_status_label -}}
+      </div>
+    </div>
+  </div>
+  <div class='flex'>
+    <div class='basis-2/4 uppercase text-sm'>
+      <div>
+        {{- 'customer.orders.total' | t -}}
+      </div>
+    </div>
+    <div class='basis-2/4'>
+      <div class='text-right text-sm'>
+        {{- order.total_price | money_with_currency -}}
+      </div>
+    </div>
+  </div>
+</div>

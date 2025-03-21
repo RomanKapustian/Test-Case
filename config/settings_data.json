@@ -1,0 +1,13 @@
+{
+  "current": {
+    "technical_storefront_token": "02f858f7a6669fe67fe505ad3d98f2f9",
+    "technical_storefront_api_version": "2022-10",
+    "sections": {
+      "header": {
+        "type": "header",
+        "settings": {}
+      }
+    },
+    "content_for_index": []
+  }
+}

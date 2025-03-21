@@ -1,0 +1,83 @@
+<div
+  class='best-sellers'
+  data-section='best-sellers'
+>
+  <script
+    type='application/json'
+    data-section-data
+  >
+    {}
+  </script>
+
+  {% assign bestSellerProducts = section.settings.collection.products %}
+  {% assign bestSellerProductsCount = section.settings.collection.products.count %}
+
+  {% if bestSellerProductsCount > 0 %}
+    <div class='max-w-container mx-auto px-5 laptop:px-0 py-6 laptop:py-75'>
+      <div class='flex justify-center laptop:justify-between items-center mb-5 laptop:mb-30'>
+        <h2 class='m-0 text-default'>
+          {{ section.settings.header }}
+        </h2>
+        <a
+          href='{{ section.settings.collection.url }}'
+          class='p-5 font-poppins -tracking-[0.3px] gap-2 items-center justify-between hidden laptop:flex text-[#5C553A] no-underline'
+        >
+          <span>Shop All Best Sellers</span>
+          {% render 'icon-arrow' %}
+        </a>
+      </div>
+      <div class='overflow-hidden w-full laptop:w-[calc(100%+((100vw-100%)/2))]'>
+        <div class='flex flex-wrap justify-between laptop:grid-scroll laptop:pb-[56px]'>
+          {%- for product in bestSellerProducts
+            limit: section.settings.max_products
+          -%}
+            {% render 'product-card',
+              product: product,
+              show_secondary_image: true,
+              index: forloop.index
+            %}
+          {%- endfor -%}
+        </div>
+      </div>
+      <div class='flex laptop:hidden justify-center items-center'>
+        <a
+          href='#'
+          data-show-products
+          class='inline-block font-poppins font-semibold text-base text-center leading-[140%] w-full max-w-[327px] bg-default text-white rounded-2xl py-[15px] no-underline px-3 hover:opacity-80 active:opacity-60'
+          >Show More</a
+        >
+      </div>
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Best Sellers",
+  "limit": 1,
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "text",
+      "id": "header",
+      "label": "Title",
+      "default": "Best Sellers"
+    },
+    {
+      "type": "number",
+      "id": "max_products",
+      "label": "Products to Show",
+      "default": 10
+    }
+  ],
+  "presets": [
+    {
+      "name": "Best Sellers"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,17 @@
+{
+  "extends": [
+    "stylelint-config-recommended-scss",
+    "stylelint-config-idiomatic-order"
+  ],
+  "plugins": ["stylelint-order"],
+  "rules": {
+    "rule-empty-line-before": [
+      "always",
+      { "except": ["after-single-line-comment", "first-nested"] }
+    ],
+    "declaration-no-important": true,
+    "value-no-vendor-prefix": true,
+    "property-no-vendor-prefix": true
+  },
+  "ignoreFiles": ["./assets/*.css"]
+}

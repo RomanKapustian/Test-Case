@@ -1,0 +1,28 @@
+{% comment %}
+  - This file will be copied into the sections directory
+  - The wrapper can use any element type, but must have the data-section attribute if the section needs javascript
+      -- The data-section attribute value must match the component directory name (in this case "example")
+      -- If the component doesn't need javascript then the data-section attribute can be removed
+  - The component does not need to include a script tag for data, but if it does exist, it will be automatically scraped and passed into the component JS.
+
+  We're also using TailwindCSS (https://tailwindcss.com/docs/container) as a utility class library, so while we can still write custom css, we shouldn't be writing much. Most styling should happen via Tailwind classes.
+{% endcomment %}
+
+<section data-section="example" class="p-4 mx-auto text-white example bg-slate-500">
+  <script type="application/json" data-section-data>
+    {
+      "settingOne": {{ 'passed into the JS for the component' | json }}
+    }
+  </script>
+
+  {% render 'example' %}
+</section>
+
+{% schema %}
+{
+  "name": "Example Section",
+  "settings": [
+
+  ]
+}
+{% endschema %}

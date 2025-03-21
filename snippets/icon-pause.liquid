@@ -1,0 +1,18 @@
+{% unless aria_label %}
+  {% assign aria_label = 'accessibility.pause' | t %}
+{% endunless %}
+
+<svg
+  width="54"
+  height="54"
+  viewBox="0 0 54 54"
+  fill="none"
+  focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+  aria-label="{{ aria_label }}"
+  aria-hidden="true"
+>
+  <title>{{ aria_label }}</title>
+  <line x1="22.25" y1="19.25" x2="22.25" y2="33.75" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="31.75" y1="33.75" x2="31.75" y2="19.25" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+</svg>

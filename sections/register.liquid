@@ -1,0 +1,146 @@
+<section class='my-20'>
+  <div class='text-h3-d mb-10 text-center'>
+    {{ 'customer.register.title' | t }}
+  </div>
+
+  <div class='mx-5 max-w-sm mx-auto my-0 md:max-w-md md:mx-auto'>
+    {%- form 'create_customer',
+      class: 'flex flex-col items-center gap-y-4',
+      novalidate: 'novalidate'
+    -%}
+      {%- if form.errors -%}
+        {%- for field in form.errors -%}
+          {%- if field == 'form' -%}
+            <span class='text-error text-center'>
+              <span class='inline-flex items-center mt-1 mr-2'>
+                {% render 'icon-error' %}
+              </span>
+              {{ form.errors.messages[field] }}
+            </span>
+            <style>
+              .text-error a {
+                display: inline-block;
+                text-decoration: underline;
+              }
+            </style>
+          {%- else -%}
+            <span id='RegisterForm-{{ field }}' class='text-error'>
+              <span class='inline-flex items-center mt-1 mr-2'>
+                {% render 'icon-error' %}
+              </span>
+              {{ form.errors.translated_fields[field] | capitalize }}
+              {{ form.errors.messages[field] }}
+            </span>
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endif -%}
+
+      {% assign input_label = 'customer.register.first_name' | t %}
+      <div class='w-full input-wrapper'>
+        <label
+          for='RegisterForm-FirstName'
+          class='input-label'
+        >
+          {{ input_label }}
+        </label>
+        <input
+          type='text'
+          name='customer[first_name]'
+          id='RegisterForm-FirstName'
+          class='input'
+          value='{{ form.first_name }}'
+          autocomplete='given-name'
+        >
+      </div>
+
+      {% assign input_label = 'customer.register.last_name' | t %}
+      <div class='w-full input-wrapper'>
+        <label
+          for='RegisterForm-LastName'
+          class='input-label'
+        >
+          {{ input_label }}
+        </label>
+        <input
+          type='text'
+          name='customer[last_name]'
+          id='RegisterForm-LastName'
+          class='input'
+          value='{{ form.last_name }}'
+          autocomplete='family-name'
+        >
+      </div>
+
+      {% assign input_label = 'customer.register.email' | t %}
+      <div
+        class='w-full input-wrapper'
+        {%- if form.errors -%}
+          style='border-color: #d7403b'
+        {% endif %}
+      >
+        <label
+          for='RegisterForm-email'
+          class='input-label'
+        >
+          {{ input_label }}
+        </label>
+        <input
+          type='email'
+          name='customer[email]'
+          id='RegisterForm-email'
+          class='input'
+          value='{{ form.email }}'
+          autocomplete='email'
+          {% if form.errors contains 'email' %}
+            aria-invalid='true'
+            aria-describedby='RegisterForm-email-error'
+          {% endif %}
+        >
+      </div>
+
+      {% assign input_label = 'customer.register.password' | t %}
+      <div
+        class='w-full input-wrapper'
+        {%- if form.errors -%}
+          style='border-color: #d7403b'
+        {% endif %}
+      >
+        <label
+          for='RegisterForm-password'
+          class='input-label'
+        >
+          {{ input_label }}
+        </label>
+        <input
+          type='password'
+          name='customer[password]'
+          id='RegisterForm-password'
+          class='input'
+          autocomplete='new-password'
+          {% if form.errors contains 'password' %}
+            aria-invalid='true'
+            aria-describedby='RegisterForm-password-error'
+          {% endif %}
+        >
+      </div>
+
+      <button class='w-full button button--primary justify-center bg-black'>
+        {{- 'customer.register.submit' | t -}}
+      </button>
+
+      <a
+        class='w-full text-center underline'
+        href='{{ routes.account_login_url }}'
+      >
+        {{ 'customer.register.to_login' | t }}
+      </a>
+    {%- endform -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Register",
+  "settings": []
+}
+{% endschema %}

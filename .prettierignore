@@ -1,0 +1,9 @@
+*.svg
+.cache
+.github
+.shopifyignore
+node_modules
+package.json
+package-lock.json
+yarn.lock
+*.liquid
